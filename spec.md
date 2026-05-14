@@ -16,7 +16,7 @@ Una aplicación web de seguimiento de hábitos personales para usuarios que dese
 - Visualización del estado actual y la racha de cada hábito.
 - Calendario visual con historial de hábitos completados.
 - Filtro de hábitos por categoría.
-- Actualización de racha después de cada check-in.
+- Actualización automática de rachas y progreso después de cada check-in.
 
 ### No entra
 
@@ -28,66 +28,69 @@ Una aplicación web de seguimiento de hábitos personales para usuarios que dese
 - Notificaciones, recordatorios o mensajes motivacionales.
 - Estadísticas históricas avanzadas fuera del calendario visual.
 - Funcionamiento offline.
-- Edición de frecuencia después de crear un hábito.
-
----
 
 ## Criterios de aceptación
 
-### Autenticación
+1. Dado que un usuario no tiene cuenta registrada, cuando ingresa un email válido, una contraseña y confirma el registro, entonces la cuenta se crea y el usuario accede a la aplicación.
 
-1. Dado que un usuario no tiene cuenta registrada, cuando ingresa un email válido y una contraseña y confirma el registro, entonces la cuenta se crea y el usuario accede a la aplicación.
-2. Dado que un usuario intenta registrarse con un email que ya existe, cuando envía el formulario, entonces se muestra un error y no se crea una cuenta.
-3. Dado que un usuario ingresa credenciales correctas, cuando inicia sesión, entonces accede a su dashboard.
-4. Dado que un usuario ingresa credenciales incorrectas, cuando intenta iniciar sesión, entonces se muestra un error y permanece en login.
-5. Dado que un usuario tiene sesión activa, cuando cierra sesión, entonces es redirigido a login y la sesión se elimina.
+2. Dado que un usuario intenta registrarse con un email que ya existe, cuando envía el formulario de registro, entonces la aplicación muestra un mensaje de error y no crea una nueva cuenta.
 
-### Hábitos
+3. Dado que un usuario ya tiene una cuenta registrada, cuando ingresa correctamente su email y contraseña en la pantalla de login, entonces accede a su dashboard personal.
 
-6. Dado que un usuario está autenticado, cuando crea un hábito con nombre, descripción, frecuencia y 1 a 3 categorías, entonces el hábito aparece en su lista.
-7. Dado que un usuario intenta crear un hábito sin completar campos obligatorios, cuando guarda, entonces se muestra error y no se crea el hábito.
-8. Dado que un usuario intenta crear un hábito con más de 3 categorías, cuando guarda, entonces se muestra error.
-9. Dado que un usuario elimina un hábito, cuando confirma la acción, entonces el hábito desaparece de la lista.
+4. Dado que un usuario ingresa credenciales incorrectas en el login, cuando intenta iniciar sesión, entonces la aplicación muestra un mensaje de error y permanece en la pantalla de login.
 
-10. Dado que un usuario edita un hábito, cuando modifica únicamente la frecuencia y guarda, entonces la frecuencia se actualiza y la racha del hábito se reinicia a 0.
+5. Dado que un usuario tiene sesión iniciada, cuando selecciona la opción de cerrar sesión, entonces es redirigido a la pantalla de login y la sesión finaliza.
 
-### Check-ins
+6. Dado que un usuario tiene sesión iniciada, cuando crea un hábito ingresando nombre, descripción, frecuencia y entre 1 y 3 categorías, entonces el hábito aparece inmediatamente en su lista principal.
 
-11. Dado un hábito diario activo, cuando el usuario marca el hábito como completado en el día actual, entonces el check-in se registra y la racha se recalcula en +1 si es consecutivo o se reinicia a 1 si no lo es.
-12. Dado un hábito ya completado en el día actual, cuando el usuario lo desmarca el mismo día, entonces el check-in se elimina y la racha se recalcula correctamente.
-13. Dado que el usuario intenta interactuar con días pasados o futuros, entonces no existen acciones de creación, edición o eliminación de check-ins.
+7. Dado que un usuario intenta crear un hábito sin completar nombre, descripción, frecuencia o categorías, cuando intenta guardar el hábito, entonces la aplicación muestra un mensaje de error y el hábito no se guarda.
 
-### Hábitos semanales
+8. Dado que un usuario intenta crear un hábito con más de 3 categorías seleccionadas, cuando intenta guardar el hábito, entonces la aplicación muestra un mensaje de error y el hábito no se guarda.
 
-14. Dado un hábito semanal con meta de N check-ins por semana, cuando el usuario completa N check-ins dentro de la misma semana calendario, entonces el hábito se marca como completado para esa semana.
-15. Dado que el usuario ya alcanzó la meta semanal, cuando realiza check-ins adicionales en la misma semana, entonces los check-ins se registran sin modificar el estado de completado semanal.
-16. Dado que inicia una nueva semana calendario, cuando el usuario consulta el hábito, entonces el conteo semanal se reinicia a 0.
-17. Dado que termina una semana sin cumplir la meta semanal, entonces la racha del hábito se reinicia.
+9. Dado que un usuario elimina un hábito existente, cuando confirma la acción desde el mensaje de confirmación, entonces el hábito desaparece de la lista principal.
 
-### Vista y calendario
+10. Dado que un hábito ya existe, cuando el usuario accede a la edición del hábito, entonces únicamente puede modificar la frecuencia del hábito.
 
-18. Dado que un usuario tiene hábitos creados, cuando entra al dashboard, entonces ve nombre, categorías, estado del día actual y racha de cada hábito.
-19. Dado que un usuario usa el filtro por categoría, cuando selecciona una categoría, entonces solo ve hábitos asociados a esa categoría.
-20. Dado que existen check-ins, cuando abre el calendario, entonces puede ver qué hábitos se completaron por día.
-21. Dado que un hábito fue eliminado, cuando el usuario revisa el calendario, entonces los registros históricos de check-ins siguen visibles.
-22. Dado que el usuario consulta un día pasado en el calendario, entonces puede ver los check-ins de ese día pero no editarlos.
-23. Dado que el usuario no tiene hábitos, cuando entra al dashboard, entonces ve un estado vacío con opción de crear hábito.
+11. Dado que el usuario cambia la frecuencia de un hábito existente y guarda los cambios, entonces la racha actual del hábito se reinicia a cero.
 
-### Conectividad
+12. Dado que un usuario tiene un hábito diario activo, cuando marca el hábito como completado en el día actual, entonces el estado del hábito cambia a completado y la racha actual se actualiza automáticamente.
 
-24. Dado que el usuario pierde conexión a internet, cuando intenta interactuar con la app, entonces la UI bloquea acciones y muestra estado de reconexión.
+13. Dado que un usuario ya marcó un hábito como completado en el día actual, cuando decide desmarcarlo el mismo día, entonces el estado del hábito, la racha y los registros relacionados se actualizan nuevamente.
 
----
+14. Dado que un usuario consulta días futuros o días anteriores al actual, entonces no existen opciones visibles para agregar, editar o eliminar check-ins en esas fechas.
+
+15. Dado que un usuario tiene un hábito semanal con una meta definida de N check-ins por semana, cuando completa la cantidad requerida de check-ins dentro de la misma semana, entonces el hábito cambia a estado completado y la racha semanal se mantiene activa.
+
+16. Dado que un usuario ya alcanzó la meta semanal de un hábito, cuando realiza check-ins adicionales durante la misma semana, entonces los nuevos registros se guardan en el calendario sin modificar nuevamente el estado de cumplimiento semanal.
+
+17. Dado que inicia una nueva semana calendario, cuando el usuario consulta un hábito semanal, entonces el conteo semanal vuelve a iniciar desde cero para la nueva semana.
+
+18. Dado que finaliza una semana calendario y un hábito semanal no alcanzó la cantidad mínima de check-ins requerida, entonces la racha actual de ese hábito se reinicia.
+
+19. Dado que un usuario tiene hábitos registrados, cuando entra a la pantalla principal, entonces visualiza para cada hábito su nombre, categorías, estado actual y racha activa.
+
+20. Dado que un usuario tiene hábitos registrados en distintas categorías, cuando selecciona una categoría desde el filtro principal, entonces la lista muestra únicamente los hábitos asociados a esa categoría.
+
+21. Dado que existen check-ins registrados, cuando el usuario abre la vista de calendario, entonces cada día muestra los hábitos que fueron marcados como completados en esa fecha.
+
+22. Dado que un hábito fue eliminado después de tener check-ins registrados, cuando el usuario consulta fechas anteriores en el calendario, entonces los registros históricos de cumplimiento siguen siendo visibles.
+
+23. Dado que el usuario consulta un día pasado desde el calendario, entonces puede visualizar los hábitos completados en esa fecha pero no puede modificar ni agregar check-ins históricos.
+
+24. Dado que el usuario no tiene hábitos creados, cuando entra a la pantalla principal, entonces se muestra un mensaje indicando que aún no tiene hábitos configurados y un botón para crear un nuevo hábito.
+
+25. Dado que el usuario pierde conexión a internet, cuando intenta acceder a la aplicación o realizar acciones dentro de ella, entonces la aplicación no permite interacción hasta recuperar conexión.
+
+## No-goals
 
 ## No-goals
 
 - No habrá autenticación mediante Google, Apple u otros servicios externos.
 - No habrá funciones sociales, hábitos compartidos ni perfiles públicos.
-- No habrá frases motivacionales, recompensas, logros ni gamificación.
+- No habrá frases motivacionales, recompensas, logros ni sistemas de gamificación.
 - No habrá categorías personalizadas creadas por el usuario.
 - No habrá edición de check-ins de días pasados o futuros.
 - No habrá notificaciones ni recordatorios automáticos.
 - No habrá estadísticas históricas avanzadas fuera del calendario visual.
 - No habrá funcionamiento offline ni sincronización automática al recuperar conexión.
 - No habrá edición de nombre, descripción o categorías después de crear un hábito.
-- No habrá edición de frecuencia después de crear un hábito.
