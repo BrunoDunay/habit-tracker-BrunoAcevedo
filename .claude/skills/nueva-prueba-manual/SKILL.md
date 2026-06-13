@@ -1,0 +1,26 @@
+name: nueva-prueba-manual
+description: "Invocar cuando se quiere agregar una prueba manual al plan de pruebas del proyecto"
+
+Cuerpo del skill:
+
+1) Plantilla de prueba (placeholders):
+
+ID: PR-{{number}}
+Criterio de aceptación: {{spec-ref}}
+Precondición: {{precondition}}
+Pasos:
+1. {{step-1}}
+2. {{step-2}}
+Resultado esperado: {{observable_result}}
+Estado: pendiente
+
+2) Validaciones:
+- Verificar que `Criterio de aceptación` referencia exactamente 1 criterio de `spec.md`.
+- Verificar que `Resultado esperado` es observable/verificable.
+- Rechazar pasos ambiguos; exigir acciones concretas.
+
+3) Auto-numeración:
+- Leer `docs/pruebas-manuales.md` o carpeta equivalente y asignar el siguiente ID correlativo.
+
+Salida:
+- `status: ok` + `id: PR-000N` + prueba formateada; o `status: error` con lista de problemas.
